@@ -3,12 +3,19 @@ import pandas as pd
 
 class TxtToCsv:
     """Create an object that handles txt to pandas convertion"""
-    def __init__(self,path:str,header:str,delim=","):
+    def __init__(self,path,header,delim):
         self.path = path
-        if delim.lower() =='tab':
+
+
+        if len(delim)==0:
+            self.delim=","
+
+        elif delim.lower() =='tab':
             self.delim='\t'
+
         else:
-            self.delim=delim
+            self.delim = delim
+
         self.header= header
 
     def validate_file(self):
