@@ -3,6 +3,7 @@ import argparse
 from PyInquirer import prompt
 from pyfiglet import Figlet
 from .txt_to_csv import TxtToCsv
+from .pd_transformations import ingest_transformations
 
 
 def file_factory(choice,path):
@@ -11,7 +12,7 @@ def file_factory(choice,path):
             'type':'input',
             'name':'delimeter',
             'message': 'What is the delimeter/separator used in your text file?'\
-                       ' For tab separated files type: "TAB" (Default is ",")'
+                       ' For tab separated files type "TAB" (Default is ","):'
         },
             {
                 'type':'confirm',
@@ -21,6 +22,7 @@ def file_factory(choice,path):
             }
         ]
         answer= prompt(questions=temp_prompt)
+        print(answer)
         return TxtToCsv(path,answer['header_conf'],answer['delimeter'])
 
 
@@ -76,7 +78,6 @@ def choose_transformations(name):
     ]
 
     answers = prompt(questions=transformations_prompt)
-    print(answers)
     return answers
 
 def main():
@@ -86,7 +87,11 @@ def main():
     args = parser.parse_args()
     user_name=greet_user()
     choice= choose_file_option(user_name)
-    file_class = file_factory(choice,args.path)
-    initial_pd=file_class.retur_pd()
+    file_obj = file_factory(choice,args.path)
+    initial_pd=file_obj.retur_pd()
     transformations = choose_transformations(user_name)
-    file_class.return_csv(initial_pd)
+
+    ingest_transformations(transformations,initial_pd)
+
+    #Change to final_pd var when do with tranformations module
+    file_obj.return_csv(initial_pd)
