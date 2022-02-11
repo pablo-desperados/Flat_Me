@@ -22,7 +22,6 @@ def file_factory(choice,path):
             }
         ]
         answer= prompt(questions=temp_prompt)
-        print(answer)
         return TxtToCsv(path,answer['header_conf'],answer['delimeter'])
 
 
@@ -92,6 +91,6 @@ def main():
     transformations = choose_transformations(user_name)
 
     ingest_transformations(transformations,initial_pd)
-
     #Change to final_pd var when do with tranformations module
     file_obj.return_csv(initial_pd)
+    print("Process completed, enjoy your new file(s)!")
