@@ -3,26 +3,31 @@ import argparse
 from PyInquirer import prompt
 from pyfiglet import Figlet
 from .txt_to_csv import TxtToCsv
+from .csv_to_txt import CsvToTxt
 from .pd_transformations import ingest_transformations
 
 
 def file_factory(choice,path):
+    temp_prompt=[{
+        'type':'input',
+        'name':'delimeter',
+        'message': 'What is the delimeter/separator used in your text file?' \
+                   ' For tab separated files type "TAB" (Default is ","):'
+    },
+        {
+            'type':'confirm',
+            'name':'header_conf',
+            'message':'Does your file contain any headers? (Default is yes)',
+            'default':True
+        }
+    ]
+
     if choice=='TXT to CSV':
-        temp_prompt=[{
-            'type':'input',
-            'name':'delimeter',
-            'message': 'What is the delimeter/separator used in your text file?'\
-                       ' For tab separated files type "TAB" (Default is ","):'
-        },
-            {
-                'type':'confirm',
-                'name':'header_conf',
-                'message':'Does your file contain any headers? (Default is yes)',
-                'default':True
-            }
-        ]
         answer= prompt(questions=temp_prompt)
         return TxtToCsv(path,answer['header_conf'],answer['delimeter'])
+    if choice=='CSV to TXT':
+        answer= prompt(questions=temp_prompt)
+        return  CsvToTxt(path,answer['header_conf'],answer['delimeter'])
 
 
 
@@ -81,16 +86,27 @@ def choose_transformations(name):
 
 def main():
     parser = argparse.ArgumentParser()
+
     parser.add_argument('-p','--path',help=
                         'Specifies location of the file',required=True)
+
     args = parser.parse_args()
+
     user_name=greet_user()
+
     choice= choose_file_option(user_name)
+
     file_obj = file_factory(choice,args.path)
-    initial_pd=file_obj.retur_pd()
+
+    data_frame=file_obj.retur_pd()
+
+
     transformations = choose_transformations(user_name)
 
-    ingest_transformations(transformations,initial_pd)
+    ingest_transformations(transformations,data_frame)
+
     #Change to final_pd var when do with tranformations module
-    file_obj.return_csv(initial_pd)
+
+    file_obj.return_file(data_frame)
+
     print("Process completed, enjoy your new file(s)!")
