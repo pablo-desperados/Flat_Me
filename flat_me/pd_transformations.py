@@ -14,12 +14,14 @@ def change_column_name_prompt(column_ix,name):
 
 def change_column_name(df):
     list_of_columns=df.columns.tolist()
-    print(list_of_columns)
     new_list=[]
     for ix,column in enumerate(list_of_columns):
         new_val = change_column_name_prompt(ix,column)
         new_list.append(new_val)
-    print(new_list)
+    print("Processing column changes...")
+    df.columns = new_list
+    print("The names of the columns have been successfully changed!")
+
 
 
 def ingest_transformations(package,df):

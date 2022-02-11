@@ -37,9 +37,11 @@ class TxtToCsv:
 
 
     def return_csv(self,df):
+        print(f"Creating csv in the followign directory: {self.path}")
         try:
             csv_path = self.path.replace('.txt','.csv')
             df.to_csv(csv_path,encoding='utf-8',index=self.header)
+
         except:
             raise ValueError("Something went terribly wrong when returning the csv!")
 
