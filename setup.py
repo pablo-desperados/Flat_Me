@@ -7,7 +7,7 @@ setup(
     description='Literally just a test library',
     author='Me',
     license='MIT',
-    install_requires=['PyInquirer','pyfiglet','pandas'],
+    install_requires=['PyInquirer','pyfiglet','pandas','pathlib'],
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
     test_suite='tests',

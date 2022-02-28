@@ -1,5 +1,5 @@
 import pandas as pd
-import os
+from pathlib import Path
 from PyInquirer import prompt
 
 class TransformationWrapper:
@@ -32,8 +32,20 @@ class TransformationWrapper:
         print("The names of the columns have been successfully changed!")
 
     def change_file_name(self):
-        #TODO
-        print(os.path.basename(self.file_obj.path))
+        old_path = Path(self.file_obj.path)
+
+        question={
+            'type':'input',
+            'name':'change_name',
+            'message':"Please choose a name for your new file, or press enter to make no changes.",
+            'default':f"{old_path.stem}"
+
+        }
+        answer= prompt(question)
+
+        new_path = str(old_path.parent)+"/"+answer['change_name']+self.file_obj.dest_extension
+        self.file_obj.path=new_path
+        print("Your file will have a new name now!")
 
 
     def ingest_transformations(self):

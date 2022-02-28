@@ -2,8 +2,7 @@ from __future__ import print_function, unicode_literals
 import argparse
 from PyInquirer import prompt
 from pyfiglet import Figlet
-from .txt_to_csv import TxtToCsv
-from .csv_to_txt import CsvToTxt
+from .file_factory import FileFactory
 from .pd_transformations import TransformationWrapper
 
 
@@ -22,12 +21,10 @@ def file_factory(choice,path):
         }
     ]
 
-    if choice=='TXT to CSV':
-        answer= prompt(questions=temp_prompt)
-        return TxtToCsv(path,answer['header_conf'],answer['delimeter'])
-    if choice=='CSV to TXT':
-        answer= prompt(questions=temp_prompt)
-        return  CsvToTxt(path,answer['header_conf'],answer['delimeter'])
+    answer = prompt(questions=temp_prompt)
+
+    file = FileFactory().create_file(choice,answer,path)
+    return file
 
 
 
@@ -99,11 +96,12 @@ def main():
     choice= choose_file_option(user_name)
     file_obj = file_factory(choice,args.path)
     data_frame=file_obj.retur_pd()
-    #Prompt Trnasformations and execute them
+
+    #Prompt Transformations and execute them
     transformations = choose_transformations(user_name)
 
+    #Ingest chosen transformations with Wrapper
     pd_object = TransformationWrapper(data_frame,file_obj,transformations)
     pd_object.ingest_transformations()
 
-
-    file_obj.return_file(data_frame)
+    #file_obj.return_file(data_frame)
