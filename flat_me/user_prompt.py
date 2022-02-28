@@ -4,7 +4,7 @@ from PyInquirer import prompt
 from pyfiglet import Figlet
 from .txt_to_csv import TxtToCsv
 from .csv_to_txt import CsvToTxt
-from .pd_transformations import ingest_transformations
+from .pd_transformations import TransformationWrapper
 
 
 def file_factory(choice,path):
@@ -40,8 +40,7 @@ def greet_user():
         'message':'Before we begin, let\'s start with something easy: What is your name?'
     }
     answer = prompt(questions=name_prompt)
-
-    if len(answer['user_name']) == 0:
+    if len(answer['user_name']) == 0 or answer['user_name'].strip()=='':
         answer['user_name'] = "John Doe"
 
     return answer['user_name']
@@ -84,29 +83,27 @@ def choose_transformations(name):
     answers = prompt(questions=transformations_prompt)
     return answers
 
-def main():
+def input_parser():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-p','--path',help=
-                        'Specifies location of the file',required=True)
-
+    'Specifies location of the file',required=True)
     args = parser.parse_args()
+    return args
 
+def main():
+
+    #Take Args, greet user, and prepare pandas DF for transformations
+    args=input_parser()
     user_name=greet_user()
-
     choice= choose_file_option(user_name)
-
     file_obj = file_factory(choice,args.path)
-
     data_frame=file_obj.retur_pd()
-
-
+    #Prompt Trnasformations and execute them
     transformations = choose_transformations(user_name)
 
-    ingest_transformations(transformations,data_frame)
+    pd_object = TransformationWrapper(data_frame,file_obj,transformations)
+    pd_object.ingest_transformations()
 
-    #Change to final_pd var when do with tranformations module
 
     file_obj.return_file(data_frame)
-
-    print("Process completed, enjoy your new file(s)!")

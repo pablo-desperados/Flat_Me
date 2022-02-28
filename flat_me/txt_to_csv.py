@@ -3,9 +3,11 @@ import pandas as pd
 
 class TxtToCsv:
     """Create an object that handles txt to pandas convertion"""
-    def __init__(self,path,header,delim):
+    def __init__(self,path,header,delim,dest_extension='.csv',cur_extension='.txt'):
         self.path = path
-
+        self.header= header
+        self.dest_extension = dest_extension
+        self.cur_extension = cur_extension
 
         if len(delim)==0:
             self.delim=","
@@ -16,7 +18,7 @@ class TxtToCsv:
         else:
             self.delim = delim
 
-        self.header= header
+
 
     def validate_file(self):
         if exists(self.path) and self.path.endswith('.txt'):
@@ -41,6 +43,7 @@ class TxtToCsv:
         try:
             csv_path = self.path.replace('.txt','.csv')
             df.to_csv(csv_path,encoding='utf-8',index=False)
+            print("Process completed, enjoy your new file(s)!")
 
         except:
             raise ValueError("Something went terribly wrong when returning the csv!")
