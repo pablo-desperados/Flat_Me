@@ -1,6 +1,6 @@
+"""This module handles conversions from .csv files to .txt files"""
 from os.path import exists
 import pandas as pd
-import numpy as np
 
 class CsvToTxt:
     '''Creates an object for pd tranformations and file exporting'''
@@ -19,9 +19,10 @@ class CsvToTxt:
 
 
     def validate_file(self):
+        """Validating if the file is in the correct format"""
         if exists(self.path) and self.path.endswith('.csv'):
             return True
-        raise FileNotFoundError("You have either entered the wrong path to the file or the file is not a .csv file")
+        raise FileNotFoundError("Either the path doesn't exist or the file is not a .csv")
 
 
     def retur_pd(self):
@@ -35,11 +36,12 @@ class CsvToTxt:
             return df
 
     def return_file(self,df):
-        print(f"Creating csv in the specified path")
+        """creating the desired file in the same directory as the old one"""
+        print("Creating csv in the specified path")
         try:
             txt_path = self.path.replace('.csv','.txt')
             df.to_csv(txt_path,header=self.header,index=False)
             print("Process completed, enjoy your new file(s)!")
 
-        except:
-            raise ValueError("Something went terribly wrong when returning the txt file!")
+        except ValueError as value_error:
+            raise ValueError("Something went terribly wrong when returning the txt file!") from value_error

@@ -5,6 +5,6 @@ Written entirely in python as a way to ditch unsecure file conversion website or
 ##Setup and Usage
 After installing the package straight from pypi, just type the following in your terminal:
 
-`flat_me -path or -p=<path of the file you want to transform>`
+`flat-me --path or -p= <path of the file you want to transform>`
 
 then follow the instructions and you'll be all set!
