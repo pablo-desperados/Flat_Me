@@ -1,3 +1,4 @@
+"""Main entry point for the application"""
 from __future__ import print_function, unicode_literals
 import argparse
 from PyInquirer import prompt
@@ -7,6 +8,7 @@ from .pd_transformations import TransformationWrapper
 
 
 def file_factory(choice,path):
+    """Create a file object class depending on the chosen file convertion option"""
     temp_prompt=[{
         'type':'input',
         'name':'delimeter',
@@ -29,6 +31,7 @@ def file_factory(choice,path):
 
 
 def greet_user():
+    """Greets users and asks for their name"""
     font= Figlet(font='standard',justify='center')
     print(font.renderText("Welcome to Flat_Me !"))
     name_prompt= {
@@ -44,7 +47,7 @@ def greet_user():
 
 
 def choose_file_option(name):
-
+    """Prompts users with different conversion options"""
     #TODO: limit choices depending on file chosen
 
     file_prompt={
@@ -57,6 +60,7 @@ def choose_file_option(name):
     return answer['convertion_type']
 
 def choose_transformations(name):
+    """Prompts user with different data transformation options"""
     transformations_prompt=[
         {
             'type':'confirm',
@@ -81,6 +85,7 @@ def choose_transformations(name):
     return answers
 
 def input_parser():
+    """Parse through initial CLI input for path variable"""
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-p','--path',help=
@@ -104,4 +109,4 @@ def main():
     pd_object = TransformationWrapper(data_frame,file_obj,transformations)
     pd_object.ingest_transformations()
 
-    #file_obj.return_file(data_frame)
+    file_obj.return_file(data_frame)
