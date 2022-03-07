@@ -4,6 +4,7 @@ from .file_classes import TxtToCsv
 from .file_classes import CsvToJson
 
 class FileFactory():
+
     @staticmethod
     def create_file(format_chosen, answer, path):
         if format_chosen =='TXT to CSV':
