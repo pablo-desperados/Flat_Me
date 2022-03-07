@@ -54,7 +54,7 @@ def choose_file_option(name):
         'type':'list',
         'name':'convertion_type',
         'message': f'Hi {name}, how do want to use Flat_Me today?',
-        'choices':['CSV to TXT', 'TXT to CSV']
+        'choices':['CSV to TXT', 'TXT to CSV','CSV to JSON']
     }
     answer = prompt(questions=file_prompt)
     return answer['convertion_type']
