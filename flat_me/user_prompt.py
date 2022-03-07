@@ -125,4 +125,5 @@ def main():
     pd_object = TransformationWrapper(data_frame,file_obj,transformations)
     pd_object.ingest_transformations()
 
-    #file_obj.return_file(data_frame)
+    file_obj.return_file(data_frame)
+
