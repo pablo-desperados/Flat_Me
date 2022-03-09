@@ -7,7 +7,7 @@ class CsvToJson(CsvUtils):
         CsvUtils.__init__(self,path,header,delim,dest_extension)
 
     def return_file(self,df):
-        """Creating a JSON file out of a structured csv file"""
+
         print("Creating csv in the specified path...")
 
         try:
@@ -15,6 +15,6 @@ class CsvToJson(CsvUtils):
             df.to_json(json_path,orient="columns")
             print("Process completed, enjoy your new file(s)!")
         except ValueError as value_error:
-            raise ValueError("Something went terribly wrong when returning the txt file!") from value_error
+            raise ValueError("Something went terribly wrong when returning the json file!") from value_error
 
 

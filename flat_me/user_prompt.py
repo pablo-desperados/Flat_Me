@@ -58,8 +58,7 @@ def choose_file_option(name):
     }
 
     file_options = {'CSV':['CSV to JSON','CSV to TXT'],
-                    'TXT':['TXT to CSV'],
-                    'JSON':['JSON to CSV', 'JSON To TXT']
+                    'TXT':['TXT to CSV','TXT to JSON'],
                     }
     answer_file = prompt(questions=file_prompt)
 
