@@ -54,7 +54,7 @@ def choose_file_option(name):
         'type':'list',
         'name':'convertion_type',
         'message': f'Hi {name}, what type of file are you using today?',
-        'choices':['CSV', 'TXT','JSON']
+        'choices':['CSV', 'TXT']
     }
 
     file_options = {'CSV':['CSV to JSON','CSV to TXT'],
