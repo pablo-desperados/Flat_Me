@@ -1,25 +1,28 @@
 from os.path import exists
 import pandas as pd
 
-class CsvUtils:
-    def __init__(self,path,header,delim,dest_extension,cur_extension='.csv'):
+class TxtUtils:
+
+    def __init__(self, path, header, delim, dest_extension, cur_extension='.csv'):
         self.path = path
         self.header = header
         self.dest_extension = dest_extension
         self.cur_extension = cur_extension
 
-        if len(delim)==0:
-            self.delim=","
-        elif delim.lower() =='tab':
-            self.delim='\t'
+        if len(delim) == 0:
+            self.delim = ","
+        elif delim.lower() == 'tab':
+            self.delim = '\t'
         else:
             self.delim = delim
 
     def validate_file(self):
         """Validating if the file is in the correct format"""
-        if exists(self.path) and self.path.endswith('.csv'):
+        if exists(self.path) and self.path.endswith('.txt'):
             return True
-        raise FileNotFoundError("Either the path is incorrect or the file is not a .csv")
+        raise FileNotFoundError("Either the path is incorrect or the file is not a .txt")
+
+
 
     def retur_pd(self):
         """Return pandas DF for txt files"""
