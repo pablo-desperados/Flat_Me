@@ -31,5 +31,12 @@ class TxtUtils:
             final_header = 0
 
         if self.validate_file():
-            df = pd.read_csv(self.path, sep=self.delim, header=final_header,engine='python')
-            return df
+            try:
+                df = pd.read_csv(self.path, sep=self.delim, header=final_header,engine='python',encoding_errors='replace')
+                return df
+            except UnicodeDecodeError:
+                print("Something went really wrong with the encoding of your file!")
+                raise UnicodeDecodeError
+            except Exception:
+                print("Unexpected error: ", sys.exc_info()[0])
+                raise
