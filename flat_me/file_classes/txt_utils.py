@@ -38,5 +38,5 @@ class TxtUtils:
                 print("Something went really wrong with the encoding of your file!")
                 raise UnicodeDecodeError
             except Exception:
-                print("Unexpected error:", sys.exc_info()[0])
+                print("Unexpected error: ", sys.exc_info()[0])
                 raise
